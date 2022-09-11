@@ -19,53 +19,53 @@ RSpec.describe 'Users', type: :request do
     )
   end
 
-  before(:all) do
-    User.create(
-      email: 'active_1@example.com',
-      password: 'supersecurepassword',
-      password_confirmation: 'supersecurepassword',
-      status: 'active'
-    )
-    User.create(
-      email: 'active_2@example.com',
-      password: 'supersecurepassword',
-      password_confirmation: 'supersecurepassword',
-      status: 'active'
-    )
-    User.create(
-      email: 'archived_2@example.com',
-      password: 'supersecurepassword',
-      password_confirmation: 'supersecurepassword',
-      status: 'archived'
-    )
-  end
-
   describe 'GET /index' do
+    before do
+      User.create(
+        email: 'active_1@example.com',
+        password: 'supersecurepassword',
+        password_confirmation: 'supersecurepassword',
+        status: 'active'
+      )
+      User.create(
+        email: 'active_2@example.com',
+        password: 'supersecurepassword',
+        password_confirmation: 'supersecurepassword',
+        status: 'active'
+      )
+      User.create(
+        email: 'archived_2@example.com',
+        password: 'supersecurepassword',
+        password_confirmation: 'supersecurepassword',
+        status: 'archived'
+      )
+    end
+
     it 'returns http success' do
       auth_token = authenticate_user(user)
       get users_path, headers: { 'Authentication' => "Bearer #{auth_token}" }
       expect(response).to have_http_status(:success)
 
       json = JSON.parse(response.body)
-      expect(json['data'].count).to eq(5)
+      expect(json['data'].count).to eq(4)
     end
 
-    it 'returns http success based on search param "active"' do
+    it 'returns http success based on filter param "active"' do
       auth_token = authenticate_user(user)
-      get users_path(search: 'active'), headers: { 'Authentication' => "Bearer #{auth_token}" }
+      get users_path(filter: 'active'), headers: { 'Authentication' => "Bearer #{auth_token}" }
       expect(response).to have_http_status(:success)
 
       json = JSON.parse(response.body)
       expect(json['data'].count).to eq(3)
     end
 
-    it 'returns http success based on search param "archived"' do
+    it 'returns http success based on filter param "archived"' do
       auth_token = authenticate_user(user)
-      get users_path(search: 'archived'), headers: { 'Authentication' => "Bearer #{auth_token}" }
+      get users_path(filter: 'archived'), headers: { 'Authentication' => "Bearer #{auth_token}" }
       expect(response).to have_http_status(:success)
 
       json = JSON.parse(response.body)
-      expect(json['data'].count).to eq(2)
+      expect(json['data'].count).to eq(1)
     end
   end
 

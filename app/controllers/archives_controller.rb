@@ -10,7 +10,7 @@ class ArchivesController < ApplicationController
     else
       user.update(status: 'archived')
       UserMailer.with(user: user).updated.deliver_later
-      render jsonapi: user
+      render jsonapi: user, status: :created
     end
   end
 
@@ -23,7 +23,7 @@ class ArchivesController < ApplicationController
     else
       user.update(status: 'active')
       UserMailer.with(user: user).updated.deliver_later
-      render jsonapi: user
+      render jsonapi: user, status: :ok
     end
   end
 end

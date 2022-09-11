@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_paper_trail_whodunnit
 
   def index
-    render jsonapi: User.search(params[:search])
+    render jsonapi: User.search(params[:filter])
   end
 
   def destroy
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     else
       user.delete
       UserMailer.with(user: user).deleted.deliver_now
-      render jsonapi: user
+      render jsonapi: user, status: :ok
     end
   end
 end
