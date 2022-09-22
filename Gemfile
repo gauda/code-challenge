@@ -41,5 +41,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # needed by jsonapi
 gem 'ransack'
 
+gem 'pundit'
 gem 'paper_trail'
 gem 'rswag'
