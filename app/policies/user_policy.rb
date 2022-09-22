@@ -10,10 +10,6 @@ class UserPolicy < ApplicationPolicy
     user != other_user
   end
 
-  def update?
-    create?
-  end
-
   def destroy?
     create?
   end

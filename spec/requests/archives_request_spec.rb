@@ -40,6 +40,7 @@ RSpec.describe "Archives", type: :request do
       auth_token = authenticate_user(user)
       post user_archive_path(user), headers: { 'Authentication' => "Bearer #{auth_token}" }
       expect(response).to have_http_status(422)
+      expect(JSON.parse(response.body)['errors'].first['detail']).to eq('You cannot perform this action.')
     end
   end
 
@@ -57,6 +58,7 @@ RSpec.describe "Archives", type: :request do
       auth_token = authenticate_user(user)
       delete user_archive_path(user), headers: { 'Authentication' => "Bearer #{auth_token}" }
       expect(response).to have_http_status(422)
+      expect(JSON.parse(response.body)['errors'].first['detail']).to eq('You cannot perform this action.')
     end
   end
 end

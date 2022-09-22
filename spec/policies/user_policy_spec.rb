@@ -6,7 +6,7 @@ RSpec.describe UserPolicy, type: :policy do
 
   subject { described_class }
 
-  permissions :create?, :update?, :destroy? do
+  permissions :create?, :destroy? do
     it "denies action if user is other_user" do
       expect(subject).not_to permit(user, user)
     end

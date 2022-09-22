@@ -22,9 +22,10 @@ class UsersController < ApplicationController
   end
 
   def user_not_authorized(exception)
-   policy_name = exception.policy.class.to_s.underscore
-
-   @user.errors.add(:base, I18n.t("#{policy_name}.#{exception.query}", scope: "pundit", default: :default))
+   @other_user.errors.add(
+     :base,
+     I18n.t("#{exception.policy.class.to_s.underscore}.#{exception.query}", scope: "pundit", default: :default)
+   )
    render jsonapi_errors: @other_user.errors, status: :unprocessable_entity
  end
 end

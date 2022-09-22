@@ -82,6 +82,7 @@ RSpec.describe 'Users', type: :request do
       auth_token = authenticate_user(user)
       delete user_path(user), headers: { 'Authentication' => "Bearer #{auth_token}" }
       expect(response).to have_http_status(422)
+      expect(JSON.parse(response.body)['errors'].first['detail']).to eq('You cannot perform this action.')
     end
   end
 end
