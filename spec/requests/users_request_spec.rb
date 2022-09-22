@@ -50,18 +50,18 @@ RSpec.describe 'Users', type: :request do
       expect(json['data'].count).to eq(4)
     end
 
-    it 'returns http success based on filter param "active"' do
+    it 'returns http success based on query "active"' do
       auth_token = authenticate_user(user)
-      get users_path(filter: 'active'), headers: { 'Authentication' => "Bearer #{auth_token}" }
+      get users_path(q: {status_eq: :active}), headers: { 'Authentication' => "Bearer #{auth_token}" }
       expect(response).to have_http_status(:success)
 
       json = JSON.parse(response.body)
       expect(json['data'].count).to eq(3)
     end
 
-    it 'returns http success based on filter param "archived"' do
+    it 'returns http success based on query "archived"' do
       auth_token = authenticate_user(user)
-      get users_path(filter: 'archived'), headers: { 'Authentication' => "Bearer #{auth_token}" }
+      get users_path(q: {status_eq: :archived}), headers: { 'Authentication' => "Bearer #{auth_token}" }
       expect(response).to have_http_status(:success)
 
       json = JSON.parse(response.body)

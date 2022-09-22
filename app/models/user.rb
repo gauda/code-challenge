@@ -18,4 +18,10 @@ class User < ApplicationRecord
       all
     end
   }
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[status]
+  end
+
+  ransacker :status, formatter: proc { |v| User.statuses[v] }
 end
