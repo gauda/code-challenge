@@ -1,0 +1,91 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/users/{id}/archive":
+    post:
+      summary: Archives a user
+      security:
+      - api_key: []
+      tags:
+      - Archive
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '201':
+          description: user archived
+        '422':
+          description: invalid request
+    delete:
+      summary: Unarchives a user
+      security:
+      - api_key: []
+      tags:
+      - Archive
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: user unarchived
+        '422':
+          description: invalid request
+  "/users":
+    get:
+      summary: Get users
+      security:
+      - api_key: []
+      tags:
+      - Users
+      parameters:
+      - name: q[status_eq]
+        in: query
+        allowEmptyValue: true
+        schema:
+          type: string
+          enum:
+          - active
+          - archived
+      responses:
+        '200':
+          description: users found
+  "/users/{id}":
+    delete:
+      summary: Deletes a user
+      security:
+      - api_key: []
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: user deleted
+        '404':
+          description: user not found
+        '422':
+          description: invalid request
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: 0.0.0.0:3189
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Authentication
+      in: header

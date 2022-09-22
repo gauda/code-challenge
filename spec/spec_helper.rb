@@ -14,6 +14,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'support/request_spec_helper'
+require 'pundit/rspec'
 
 RSpec.configure do |config|
   config.include RequestSpecHelper

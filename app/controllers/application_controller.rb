@@ -3,6 +3,10 @@ class ApplicationController < ActionController::API
 
   private
 
+  rescue_from ActiveRecord::RecordNotFound do |ex|
+    render json: { status: 404, error: ex.to_s }, status: 404
+  end
+
   def current_user
     user_id = JwtAuthenticationService.decode_token(request)
     @user = User.find_by(id: user_id)
