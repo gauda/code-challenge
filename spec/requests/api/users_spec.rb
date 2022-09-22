@@ -7,7 +7,7 @@ RSpec.describe 'api/users', type: :request do
 
       tags 'Users'
       consumes 'application/json'
-      parameter name: :filter, in: :query, allowEmptyValue: true, schema: {
+      parameter name: 'q[status_eq]', in: :query, allowEmptyValue: true, schema: {
         type: :string,
         enum: %w[active archived]
       }
@@ -15,7 +15,7 @@ RSpec.describe 'api/users', type: :request do
       response '200', 'users found' do
         let(:user) { User.create!(email: 'admin@bar.com', password: 'foo', password_confirmation: 'foo') }
         let(:Authentication) { 'Bearer ' + JwtAuthenticationService.encode_token({ user_id: user.id }) }
-        let(:filter) {'active'}
+        let('q[status_eq]') {:active}
         run_test!
       end
     end

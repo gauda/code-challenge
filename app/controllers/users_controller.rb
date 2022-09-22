@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_action :set_paper_trail_whodunnit
 
   def index
-    render jsonapi: User.search(params[:filter])
+    render jsonapi: User.ransack(params[:q]).result
   end
 
   def destroy

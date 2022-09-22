@@ -47,7 +47,7 @@ paths:
       tags:
       - Users
       parameters:
-      - name: filter
+      - name: q[status_eq]
         in: query
         allowEmptyValue: true
         schema:
@@ -82,7 +82,7 @@ servers:
 - url: http://{defaultHost}
   variables:
     defaultHost:
-      default: localhost:3189
+      default: 0.0.0.0:3189
 components:
   securitySchemes:
     api_key:
